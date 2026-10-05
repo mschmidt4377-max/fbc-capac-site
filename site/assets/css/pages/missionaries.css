@@ -1,0 +1,33 @@
+.site-header{box-shadow:0 6px 10px -2px rgba(0,0,0,.25)}
+.miss{height:1136px;overflow:hidden}
+.miss-title{position:absolute;top:0;left:0;right:0;margin:0;text-align:center;font-family:var(--font-head);font-weight:500;font-size:46.2px;line-height:1.2;letter-spacing:-.02em;top:102px}
+.carousel{position:absolute;left:0;right:0;top:204px}
+.viewport{overflow:hidden;width:100%}
+.track{display:flex;gap:1.39vw;list-style:none;margin:0;padding:0;transition:transform .5s ease;will-change:transform}
+.slide{flex:0 0 28.82vw;min-width:0}
+.media{height:278px;overflow:hidden;background:#ddd}
+.media img{width:100%;height:100%;object-fit:cover}
+.body h2{margin:10px 0 0;font-size:40.2px;line-height:46px;letter-spacing:-.02em}
+.body p{margin:9px 0 0;font-size:16px;line-height:24px}
+.body p+p{margin-top:24px}
+.arrow{width:60px;height:60px;border-radius:50%;border:0;background:rgba(40,40,40,.75);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
+.arrow svg{width:26px;height:26px;fill:none;stroke:#fff;stroke-width:1.2}
+.arrow.desk{position:absolute;top:109px}
+.arrow-prev.desk{left:72px}
+.arrow-next.desk{right:72px}
+.m-arrows{display:none}
+@media (max-width:900px){
+  .miss{height:1085px}
+  .miss-title{top:60px;font-size:34.5px}
+  .carousel{top:147px;margin:0 16px}
+  .track{gap:20px}
+  .slide{flex:0 0 100%}
+  .media{height:240px}
+  .body h2{font-size:31px;line-height:34px;margin-top:12px}
+  .body p{font-size:16.9px;margin-top:8px}
+  .arrow.desk{display:none}
+  .m-arrows{display:flex;position:absolute;top:839px;left:0;right:0;justify-content:center;gap:18px}
+  .m-arrows .arrow{width:40px;height:40px;background:#222}
+  .m-arrows .arrow svg{width:22px;height:22px}
+}
+.slide:nth-child(4) .media img{object-position:25.7% 12.9%}

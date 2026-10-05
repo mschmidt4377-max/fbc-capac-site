@@ -1,0 +1,93 @@
+.home-title{height:188px;padding-top:39px}
+.home-title h2{margin:0 0 29px;line-height:1.2}
+.home-hero{height:580px;background-size:100% 1220px;background-position:0 -599px;background-repeat:no-repeat}
+.home-hero .wave{position:absolute;left:0;bottom:-1px;width:100%;height:100px;display:block}
+.home-hero .wave-m{display:none}
+.wave-fill{fill:#4f67a5}
+.wave-line{fill:none;stroke:#bfbfbf;stroke-width:10;vector-effect:non-scaling-stroke}
+
+.home-who{height:642px;background-position:center bottom;color:#fff;padding-top:124px}
+.home-who h2,.home-who h3,.home-who h4{color:#fff}
+.who-intro{max-width:1300px;margin:0 auto;padding:0}
+.who-intro h4{margin-top:28px;font-size:25.6px;letter-spacing:-.02em}
+.who-cols{position:absolute;left:0;right:0;top:0;bottom:0;pointer-events:none}
+.who-col{position:absolute;pointer-events:auto}
+.who-col h3{margin-bottom:30px}
+.who-col p{margin:0 0 16px;line-height:1.5}
+.who-col.c1{left:62px;width:370px;top:389px}
+.who-col.c2{left:515px;width:410px;top:378px}
+.who-col.c3{left:1010px;width:366px;top:367px}
+
+.row-giving .container{padding-top:62px}
+.home-row hr.rule{margin-bottom:0}
+.row-giving{height:547px}
+.row-sermons{height:601px}
+.row-missions{height:520px}
+.row-events{height:536px}
+.feature-row .fr-media .label{margin-top:25px;margin-bottom:12px}
+.feature-row .fr-media img{height:344px}
+.row-sermons .fr-media img{height:423px}
+.fb-feed{height:423px;overflow:hidden}
+.fb-feed iframe{display:block;border:0;max-width:100%}
+.fb-feed.is-video{height:auto}
+.row-missions .fr-media img{height:345px}
+.fr-text h2{margin-top:23px}
+.fr-text .large{margin:65px 0 0}
+.row-giving .btn{margin:62px 0 0 55px;width:323px;height:68px;padding:0;font-size:14.4px}
+.row-sermons .btn{margin:51px 0 0 55px;width:323px;height:73px;padding:0;font-size:14.4px}
+.row-sermons .fr-text h3{margin-top:22px}
+.row-sermons .fr-text h4{margin-top:80px;font-size:24px}
+.row-sermons .fr-text p{font-size:16px;line-height:1.5;max-width:270px;margin-top:28px}
+.row-missions .fr-text h3{margin-top:22px}
+.row-missions .fr-text p{font-size:15.5px;margin-top:84px;margin-bottom:0}
+.row-missions .fr-text p+p{margin-top:12px}
+.row-missions .link-small{font-size:16px}
+.ev-h{margin-top:26px;font-size:25.6px}
+.ev-sub{font-size:14.4px;margin:36px 0 44px}
+
+@media (max-width:900px){
+  .home-title{height:546px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:106px 80px 0}
+  .home-title h2{max-width:230px;line-height:1.1;margin:0}
+  .home-title h2+h2{margin-top:30px}
+  .home-hero{height:266px;background-size:cover;background-position:center 75%}
+  .home-hero .wave{display:none}
+  .home-hero .wave-m{display:block;height:38px}
+  .home-who{height:auto;padding:31px 23px 27px}
+  .who-intro{padding:0}
+  .who-intro h4{margin-top:31px;line-height:1.2;font-size:21.8px}
+  .who-cols{position:relative;margin-top:29px}
+  .who-col{position:static;width:auto!important}
+  .who-col h3{margin-bottom:28px;line-height:1.2}
+  .who-col p,.who-col .link-small{font-size:15.2px;line-height:1.58}
+  .who-col p{margin:0 0 14px}
+  .who-col.c1 h3{margin-bottom:31px}
+  .who-col.c2{margin-top:62px}
+  .who-col.c3{margin-top:70px}
+  .row-giving,.row-sermons,.row-missions,.row-events{height:auto}
+  .row-giving .container{padding-top:39px}
+  .home-row .container{padding-left:23px;padding-right:23px}
+  .feature-row .fr-media{width:211px}
+  .feature-row .fr-media .label{white-space:nowrap;font-size:21.6px;margin:23px 0 44px}
+  .feature-row .fr-media img,.row-sermons .fr-media img,.row-missions .fr-media img{height:270px}
+  .row-sermons .fr-media{width:100%}
+  .fb-feed{height:420px}
+  .fb-feed.is-video{height:auto}
+  .fr-text{width:255px}
+  .fr-text h2{margin-top:47px;line-height:1.1}
+  .fr-text .large{font-size:20px;margin:26px 0 0}
+  .fr-text .btn,.row-giving .btn,.row-sermons .btn{margin:47px 0 0;width:255px;height:58px;font-size:16px}
+  .row-giving{padding-bottom:82px}
+  .row-sermons .fr-text{width:auto}
+  .row-sermons .fr-text h3{margin-top:45px;width:255px;line-height:1.2}
+  .row-sermons .fr-text h4{margin-top:39px;font-size:20.3px}
+  .row-sermons .fr-text p{max-width:255px;margin:32px 0 0;font-size:16px;line-height:1.5}
+  .row-sermons .btn{margin-top:56px;width:344px;max-width:100%}
+  .row-sermons{padding-bottom:83px}
+  .row-missions .fr-text h3{margin-top:45px;line-height:1.2}
+  .row-missions .fr-text p{font-size:16px;margin:36px 0 0;line-height:1.5}
+  .row-missions .fr-text p+p{margin-top:17px}
+  .row-missions{padding-bottom:67px}
+  .ev-h{margin-top:161px;font-size:25.6px}
+  .ev-sub{font-size:16px;margin:28px 0 4px}
+  .row-events{padding-bottom:152px}
+}

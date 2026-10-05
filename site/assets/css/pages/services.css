@@ -1,0 +1,22 @@
+.services{height:1330px;overflow:hidden}
+.services .sv{position:absolute;margin:0}
+.services h2,.services h3,.services h4,.services p{top:var(--d);transform:translateY(-50%);left:781px;right:58px;white-space:nowrap}
+.services h2{left:58px;font-size:46.2px;line-height:1.2}
+.services h3{font-size:36.2px;line-height:1.14}
+.services h4{font-size:25.6px;line-height:1.2}
+.services p.large{font-size:22.8px;line-height:1.5;font-weight:400}
+.services h3.intro{left:58px;right:auto;width:570px;white-space:normal}
+.services h4.intro2{left:58px;right:auto;width:530px;white-space:normal}
+.services hr.sv{top:var(--d);left:58px;right:58px;border-top:1px solid #fff}
+.services hr.hr-r{left:781px}
+@media (max-width:900px){
+  .services{height:1286px}
+  .services h2,.services h3,.services h4,.services p{top:var(--m);left:24px;right:23px;white-space:normal}
+  .services h2{font-size:34.5px}
+  .services h3{font-size:28.1px;line-height:1.2}
+  .services h4{font-size:21.8px;line-height:1.2}
+  .services p.large{font-size:20px}
+  .services h3.intro,.services h4.intro2{width:auto;left:24px;right:23px}
+  .services hr.sv{top:var(--m);left:23px;right:23px}
+  .services hr.hr-r{left:23px}
+}

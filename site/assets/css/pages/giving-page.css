@@ -1,0 +1,19 @@
+.give-hero{background-size:cover;background-position:center;color:#fff;text-align:center;height:232px;display:flex;align-items:flex-start;justify-content:center;padding:44px 20px 0;position:relative}
+.give-hero::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.15)}
+.give-hero h1{position:relative;font-size:91.2px;font-weight:700;letter-spacing:-.005em;line-height:1.1;white-space:nowrap}
+.give-body{margin-top:-29px;position:relative;border-radius:29px 29px 0 0;background-size:cover;background-position:center;color:#fff;text-align:center;padding:74px 20px 50px;min-height:598px}
+.give-body::before{content:"";position:absolute;inset:0;border-radius:inherit;background:rgba(50,75,140,.28)}
+.give-body>*{position:relative}
+.give-body h3{margin-bottom:32px}
+.give-body .large{font-size:22.8px;max-width:880px;margin:0 auto 11px;line-height:34px}
+.give-btn{width:322px;height:68px;padding:0;color:rgba(255,255,255,.65);border-color:rgba(255,255,255,.65)}
+.give-note{max-width:520px;margin:50px auto 0;font-size:16px;line-height:24px}
+@media (max-width:900px){
+  .give-hero{height:121px;padding:30px 10px 0;background-position:center bottom}
+  .give-hero h1{font-size:24px}
+  .give-body{padding:38px 24px 54px;min-height:0;border-radius:0;margin-top:0}
+  .give-body h3{margin-bottom:31px}
+  .give-body .large{font-size:19.5px;line-height:30px;margin-bottom:65px}
+  .give-btn{width:166px;height:59px}
+  .give-note{margin-top:40px;font-size:16px;line-height:24px}
+}

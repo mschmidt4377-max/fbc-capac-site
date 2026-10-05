@@ -1,0 +1,124 @@
+/* Events: list page, detail pages */
+main{background:var(--blue);color:#fff}
+
+/* ---------- Hero (list page) ---------- */
+.ev-hero{position:relative;height:502px;background-size:cover;background-position:center 63%;display:flex;align-items:center;justify-content:center;text-align:center}
+.ev-hero::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.15)}
+.ev-hero h2{position:relative;color:#fff;margin:-110px 0 0;font-size:46.2px}
+.ev-wave{position:absolute;left:0;bottom:-1px;width:100%;height:100px;display:block}
+.ev-wave-m{display:none}
+.ev-wave .wave-fill{fill:var(--blue)}
+.ev-wave .wave-line{fill:none;stroke:#bfbfbf;stroke-width:8;vector-effect:non-scaling-stroke}
+
+/* ---------- List ---------- */
+.ev-list-section{padding:137px 4vw 143px;max-width:none}
+.eventlist{max-width:1284px;margin:0 auto}
+.eventlist-event{position:relative;display:flex;align-items:flex-start;margin:68px 0 0}
+.eventlist-event:first-child{margin-top:0}
+.eventlist-column-thumbnail{display:block;position:relative;width:35%;flex:0 0 35%;height:0;padding-bottom:23.3333%;overflow:hidden}
+.eventlist-column-thumbnail img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.eventlist-column-date{position:absolute;top:0;left:0;width:35%}
+.eventlist-datetag{display:table;position:absolute;top:10px;right:10px;width:70px;min-height:70px;background:#fff;color:#333;text-align:center;font-size:14px;line-height:14px}
+.eventlist-datetag-inner{display:table-cell;vertical-align:middle;padding:6px}
+.eventlist-datetag-startdate{margin:3px 0;line-height:1em;text-transform:uppercase;white-space:nowrap}
+.eventlist-datetag-startdate--month{font-size:14px;margin-top:6px}
+.eventlist-datetag-startdate--day{font-size:26px}
+.eventlist-column-info{width:65%;padding:0 0 0 34px}
+.eventlist-title{margin:0 0 18px;padding:0;font-size:28px;line-height:1.2}
+.eventlist-title a{text-decoration:none;color:inherit}
+.eventlist-meta{list-style:none;margin:0 0 18px;padding:0;font-size:14.4px}
+.eventlist-excerpt{margin:0 0 17px;font-size:16px}
+.eventlist-excerpt p{margin:0 0 1em}
+.eventlist-description{margin:0;padding-top:13px;font-size:16px;display:flow-root}
+.eventlist-description p{margin:0 0 1em}
+.eventlist-description p:last-child{margin-bottom:0}
+.eventlist-description p.body-img{margin:0 0 17px}
+.eventlist-description p.body-img:first-child{margin-top:-13px}
+.eventlist-description p.body-img~p:last-child{margin-bottom:16px}
+.eventlist-excerpt p.body-img img,.eventlist-description p.body-img img{width:100%;height:auto}
+.section-blue .eventlist-button{display:inline-flex;align-items:center;justify-content:center;width:190px;height:72px;border:1px solid var(--accent);color:var(--accent);text-decoration:none;text-transform:uppercase;font-size:16px}
+.ev-none{text-align:center;font-size:20px}
+
+/* ---------- Detail ---------- */
+.ev-detail{padding:143px 4vw 0;max-width:none}
+.eventitem-backlink{padding-top:1px;display:inline-block;font-size:16px;color:#fff;text-decoration:none}
+.eventitem{display:grid;grid-template-columns:32.63% 67.37%;max-width:1284px;margin:51px auto 0}
+.ev-detail>.eventitem-backlink{display:block;max-width:1284px;margin:0 auto}
+.eventitem-column-meta{padding-right:34px}
+.eventitem-title{font-size:28px;line-height:1.2;margin:0 0 1.4px}
+.eventitem-meta{margin:31px 0 0;font-size:14.4px;line-height:1.67}
+.eventitem-address{margin-top:16px}
+.eventitem-address a{color:#fff}
+.eventitem{min-height:513px}
+.ev-body{font-size:16px}
+.ev-body p{margin:0 0 16px}
+.ev-body p.body-img{margin:0 auto 34px}
+.ev-body p.body-img img{width:100%;height:auto}
+.ev-body p:empty{min-height:24px}
+.ev-body p.spacer{margin:0;height:87px;overflow:hidden}
+.ev-body h4{font-size:27px;margin:0 0 33px}
+.ev-body p.body-img+h4{margin-top:-17px}
+.ev-body p.left{margin-left:0}
+.ev-body p.oval{margin:36px auto 17px}
+.ev-body p.oval img{aspect-ratio:860/486;object-fit:cover;border-radius:50%}
+.ev-body p.shape{margin:44px auto 17px}
+.ev-body p.shape img{aspect-ratio:var(--ar,497/465);object-fit:cover;object-position:50% var(--oy,31%);clip-path:polygon(4% 9%,50% 2%,96% 8%,100% 50%,95% 92%,50% 100%,5% 93%,0 50%)}
+.ev-body .sqsrte-large{font-size:20.5px;font-weight:600;line-height:1.45}
+.ev-body a{color:inherit}
+
+/* gallery */
+.ev-gallery{margin:0 0 33px}
+.ev-reg .form legend{margin-bottom:9px}
+.ev-reg .form .checkbox{margin-top:7px}
+.ev-reg .form .btn-submit{margin-top:2px}
+.ev-stage{position:relative;aspect-ratio:4/3;overflow:hidden}
+.ev-slide{position:absolute;inset:0;opacity:0;transition:opacity .6s}
+.ev-slide.on{opacity:1}
+.ev-slide img{width:100%;height:100%;object-fit:cover}
+.ev-thumbs{display:flex;margin-top:18px;height:79px;overflow:hidden}
+.ev-thumbs-in{display:flex;margin:0 auto}
+.ev-thumb{flex:0 0 89px;width:89px;height:79px;padding:0;border:0;background:none;cursor:pointer;opacity:.6;position:relative}
+.ev-thumb.on{opacity:1}
+.ev-thumb img{width:100%;height:100%;object-fit:cover}
+.ev-reg{margin-top:0;padding-bottom:7px}
+.ev-reg .form-thanks{font-size:18px}
+.form input.bad,.form textarea.bad{border-color:#ff9c9c}
+
+/* prev / next */
+.item-pagination{display:flex;justify-content:space-between;align-items:flex-start;margin:0 -4vw;padding:206px 62px 0;height:330px}
+.ev-pg{display:flex;align-items:flex-start;color:#fff;text-decoration:none;max-width:50%}
+.ev-pg-next{margin-left:auto;text-align:right}
+.ev-pg-icon svg{width:14px;height:28px;fill:none;stroke:#fff;stroke-width:1.5;display:block}
+.ev-pg-prev .ev-pg-icon{margin:19px 24px 0 0}
+.ev-pg-next .ev-pg-icon{margin:19px 0 0 24px}
+.ev-pg-date{display:block;font-size:16px;line-height:1.5}
+.ev-pg-title{font-size:36px;line-height:1.2;margin:12px 0 0}
+
+@media (max-width:900px){
+  .ev-hero{height:416px;background-size:auto 585px;background-position:49% 100%}
+  .ev-hero h2{font-size:34.5px;margin-top:-48px}
+  .eventlist-datetag{left:0;right:auto}
+  .eventlist-description{margin:0 0 17px;padding-top:17px}
+  .eventlist-description p.body-img~p:last-child{margin-bottom:16px}
+  .eventlist-description p.body-img,.eventlist-description p.body-img:first-child{margin-top:19px}
+  .ev-wave{display:none}
+  .ev-wave-m{display:block;height:45px}
+  .ev-list-section{padding:32px 23px 40px}
+  .eventlist-event{display:block;margin-top:34px}
+  .eventlist-column-thumbnail{width:100%;padding-bottom:66.666%}
+  .eventlist-column-date{width:100%}
+  .eventlist-column-info{width:100%;padding:0;margin-top:26px}
+  .ev-detail{padding:38px 23px 0}
+  .eventitem{display:block;margin-top:48px}
+  .eventitem-column-meta{padding:0 0 50px}
+  .eventitem-meta{margin-top:18px}
+  .ev-body p+p.body-img:not(.oval):not(.shape){margin-top:33px}
+  .ev-body p.body-img:last-child:not(.oval):not(.shape){margin-bottom:2px}
+  .eventitem{min-height:660px}
+  .ev-body p.spacer{height:19px}
+  .ev-thumbs{margin-top:20px}
+  .item-pagination{margin:0 -23px;padding:84px 23px 10px;height:auto}
+  .ev-pg-title{font-size:28px;line-height:1.02;margin-top:16px}
+  .ev-pg-prev .ev-pg-icon{margin-right:28px}
+  .ev-pg-next .ev-pg-icon{margin-left:28px}
+}

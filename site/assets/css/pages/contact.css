@@ -1,0 +1,21 @@
+.contact{background:var(--blue);color:#fff;padding:48px 115px 105px}
+.contact-grid{display:grid;grid-template-columns:396px 650px;column-gap:164px;grid-template-areas:"title form" "info form" "map form";align-items:start;max-width:1210px;margin:0 auto}
+.contact h2{grid-area:title;font-size:46px;line-height:52px;margin-bottom:32px}
+.contact-info{grid-area:info}
+.contact-info p{margin:0;line-height:24px}
+.contact-info .gap{margin-bottom:16px}
+.contact-info p+p{margin-top:16px}
+.contact-info .grp+.grp{margin-top:33px}
+.contact-info a{text-decoration:none}
+.contact-map{grid-area:map;margin-top:34px;width:396px;height:501px;background:#e5e3df}
+.contact-map iframe{display:block;width:100%;height:100%;border:0}
+.contact .form{grid-area:form}
+@media (max-width:900px){
+  .contact{padding:60px 39px 65px}
+  .contact-grid{display:block}
+  .contact h2{font-size:34.5px;line-height:39px;margin-bottom:8px}
+  .contact-map{width:100%;height:410px;margin:0 0 45px}
+  .contact-info .grp+.grp{margin-top:76px}
+  .contact-info{margin-bottom:147px}
+  .form fieldset .field-row{margin-top:5px}
+}
