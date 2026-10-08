@@ -34,10 +34,14 @@ p{margin:0 0 1em}
 .main-nav a{font-size:16.3px;text-decoration:none;color:var(--black);margin-left:29px;line-height:1.2;padding:2px 0 3px;border-bottom:1px solid transparent}
 .main-nav a:first-child{margin-left:0}
 .main-nav a.active{border-bottom-color:var(--black)}
+.main-nav a,.fb-circle{transition:color .2s,border-color .2s,background-color .2s}
+.main-nav a:hover{color:var(--blue);border-bottom-color:var(--blue)}
 .fb-circle{width:48px;height:48px;border:1px solid var(--black);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--black);margin-right:33px}
+.fb-circle:hover{background:var(--blue);border-color:var(--blue);color:#fff}
 .fb-circle svg{width:26px;height:26px;fill:currentColor}
 .btn{display:inline-flex;align-items:center;justify-content:center;font-family:var(--font-body);font-size:16px;font-weight:400;text-transform:uppercase;text-decoration:none;border:1px solid currentColor;padding:24px 35px;line-height:1.2;background:transparent;cursor:pointer}
 .header-cta{width:240px;height:72px;padding:0;font-size:16px;color:var(--black)}
+.btn.header-cta:hover{background:#000;color:#fff;border-color:#000}
 .burger{display:none;background:none;border:0;padding:8px;cursor:pointer;width:50px;height:40px;position:relative}
 .burger span{position:absolute;left:8px;right:8px;height:1px;background:var(--black);transition:transform .3s,top .3s}
 .burger span:nth-child(1){top:13px}.burger span:nth-child(2){top:25px}
@@ -70,6 +74,8 @@ p{margin:0 0 1em}
 .center{text-align:center}
 .section-blue a{color:inherit}
 .section-blue .btn-outline-light,.btn-outline-light{color:var(--accent);border-color:var(--accent)}
+.btn,.form .btn-submit,.eventlist-button{transition:background-color .2s,color .2s,border-color .2s}
+.btn:hover,.section-blue .btn:hover,.form .btn-submit:hover,.section-blue .eventlist-button:hover{background:#fff;color:#000;border-color:#000}
 hr.rule{border:0;border-top:1px solid #fff;margin:0}
 .section-blue .link-small,.link-small{font-size:14.4px;color:var(--accent);text-decoration:underline}
 .page-title-band{background:var(--blue);color:#fff;text-align:center}

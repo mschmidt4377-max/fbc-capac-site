@@ -14,7 +14,7 @@
 .form .checkbox input{appearance:none;-webkit-appearance:none;flex:0 0 25px;width:25px;height:25px;margin:0;background:hsl(220,25%,17%);border:2px solid hsl(220,20%,30%);cursor:pointer;position:relative}
 .form .checkbox input:checked::after{content:"";position:absolute;left:7px;top:2px;width:6px;height:12px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
 .form .btn-submit{display:inline-flex;align-items:center;justify-content:center;width:132px;height:72px;background:transparent;border:1px solid hsl(223,60%,70%);color:hsl(223,40%,75%);font:inherit;font-size:16px;text-transform:uppercase;cursor:pointer;margin-top:19px}
-.form .btn-submit:hover{background:rgba(255,255,255,.1)}
+.form .btn-submit:hover{background:#fff;color:#000;border-color:#000}
 .form fieldset.checks{margin-bottom:0}
 .form fieldset.checks legend{margin-bottom:11px}
 .form fieldset.checks .checkbox:last-child{margin-bottom:0}
