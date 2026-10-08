@@ -88,6 +88,15 @@ hr.rule{border:0;border-top:1px solid #fff;margin:0}
 .event-meta{display:block;font-size:13.5px;color:var(--accent);margin-top:2px;line-height:1.3}
 .carousel-arrows{display:none}
 
+/* Sermon audio card (home Audio Sermons row + sermons page), filled by js/sermons.js */
+.sermon-latest{background:#fff;color:var(--black)}
+.sermon-latest img{display:block;height:300px;width:100%;object-fit:cover}
+.sl-body{padding:20px 24px 24px}
+.sl-date{font-family:var(--font-head);font-size:24px;letter-spacing:-.02em;line-height:1.2;margin:0}
+.sl-meta{color:#666;margin:6px 0 16px}
+.sermon-latest audio{display:block;width:100%;margin-bottom:10px}
+.sermon-latest .link-small{color:var(--blue)}
+
 @media (max-width:900px){
   :root{--header-h:148px;--gutter:23px}
   h2{font-size:34.5px}

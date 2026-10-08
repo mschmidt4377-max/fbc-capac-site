@@ -26,10 +26,9 @@
 .row-events{height:536px}
 .feature-row .fr-media .label{margin-top:25px;margin-bottom:12px}
 .feature-row .fr-media img{height:344px}
-.row-sermons .fr-media img{height:423px}
-.fb-feed{height:423px;overflow:hidden}
+.row-sermons .fr-media img{height:460px}
+.fb-feed{height:460px;overflow:hidden}
 .fb-feed iframe{display:block;border:0;max-width:100%}
-.fb-feed.is-video{height:auto}
 .row-missions .fr-media img{height:345px}
 .fr-text h2{margin-top:23px}
 .fr-text .large{margin:65px 0 0}
@@ -37,7 +36,7 @@
 .row-sermons .btn{margin:51px 0 0 55px;width:323px;height:73px;padding:0;font-size:14.4px}
 .row-sermons .fr-text h3{margin-top:22px}
 .row-sermons .fr-text h4{margin-top:80px;font-size:24px}
-.row-sermons .fr-text .audio-link{margin:24px 0 0 55px}
+.row-audio .fr-media .sermon-latest img{height:260px}
 .row-sermons .fr-text p{font-size:16px;line-height:1.5;max-width:270px;margin-top:28px}
 .row-missions .fr-text h3{margin-top:22px}
 .row-missions .fr-text p{font-size:15.5px;margin-top:84px;margin-bottom:0}
@@ -72,6 +71,7 @@
   .feature-row .fr-media img,.row-sermons .fr-media img,.row-missions .fr-media img{height:270px}
   .row-sermons .fr-media{width:100%}
   .fb-feed{height:420px}
+  .fb-feed.is-video{height:auto}
   .fb-feed.is-video{height:auto}
   .fr-text{width:255px}
   .fr-text h2{margin-top:47px;line-height:1.1}

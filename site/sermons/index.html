@@ -47,7 +47,7 @@
     <div class="feature-row">
       <div class="fr-media">
         <h4 class="label">SERMON AUDIO</h4>
-        <div class="sermon-latest" id="sermon-latest">
+        <div class="sermon-latest" id="sermon-latest" data-src="../assets/data/sermons.json">
           <img src="../assets/img/unsplash-image-npxXWgQ33ZQ.jpg" alt="">
           <div class="sl-body">
             <p class="sl-date">Coming soon</p>
@@ -74,33 +74,6 @@
   <p>106 W Church St., Capac, MI 48014 • Phone: 810-395-2195 • Copyright © 2025 First Baptist Church of Capac. All rights reserved</p>
 </footer>
 <script src="../assets/js/main.js"></script>
-<script>
-// Sermon audio list, saved by the GitHub robot in assets/data/sermons.json
-// (newest first). The newest one goes in the big card, the rest in the list.
-(function () {
-  function nice(date) {
-    return new Date(date + 'T12:00').toLocaleDateString('en-US',
-      { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
-  }
-  function player(s) {
-    return '<audio controls preload="none" src="' + s.mp3 + '"></audio>' +
-      '<a class="link-small" href="' + s.mp3 + '" download>Download MP3</a>';
-  }
-  fetch('../assets/data/sermons.json', { cache: 'no-store' })
-    .then(function (r) { return r.json(); })
-    .then(function (list) {
-      if (!list.length) return;
-      var s = list[0];
-      document.querySelector('#sermon-latest .sl-body').innerHTML =
-        '<p class="sl-date">' + nice(s.date) + '</p>' +
-        '<p class="sl-meta">' + s.minutes + ' minutes</p>' + player(s);
-      document.getElementById('sermon-list').innerHTML = list.slice(1).map(function (p) {
-        return '<li><span class="sr-date">' + nice(p.date) + '</span>' +
-          '<span class="sr-meta">' + p.minutes + ' min</span>' + player(p) + '</li>';
-      }).join('');
-    })
-    .catch(function () {});
-})();
-</script>
+<script src="../assets/js/sermons.js"></script>
 </body>
 </html>

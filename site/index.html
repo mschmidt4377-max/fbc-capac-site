@@ -115,7 +115,30 @@
           <h4>Video Sermons</h4>
           <p>Our Sunday morning messages and broadcasted live on Facebook. Click here for live and past sermons.</p>
           <a class="btn btn-outline-light" href="https://www.facebook.com/p/First-Baptist-Church-of-Capac-100064603992779/" target="_blank" rel="noopener">View Sermons on Facebook</a>
-          <p class="audio-link"><a class="link-small" href="sermons/">Listen to audio sermons</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-blue home-row row-sermons row-audio">
+    <div class="container">
+      <hr class="rule">
+      <div class="feature-row">
+        <div class="fr-media">
+          <h4 class="label">AUDIO SERMONS</h4>
+          <div class="sermon-latest" id="sermon-latest" data-src="assets/data/sermons.json">
+            <img src="assets/img/unsplash-image-npxXWgQ33ZQ.jpg" alt="">
+            <div class="sl-body">
+              <p class="sl-date">Coming soon</p>
+              <p class="sl-meta">Sunday sermons appear here after the service.</p>
+            </div>
+          </div>
+        </div>
+        <div class="fr-text">
+          <h3>Listen to our latest sermons</h3>
+          <h4>Audio Sermons</h4>
+          <p>Our Sunday morning messages, saved so you can listen any time. Press play, or download the MP3 to listen later.</p>
+          <a class="btn btn-outline-light" href="sermons/">All Audio Sermons</a>
         </div>
       </div>
     </div>
@@ -186,6 +209,7 @@
 </footer>
 <script src="assets/js/main.js"></script>
 <script src="assets/js/events.js" defer></script>
+<script src="assets/js/sermons.js" defer></script>
 <script>
 // Online Sermons: show the newest Sunday video (saved by the GitHub robot in
 // assets/data/sermon.json). If there is none yet, show the live Facebook feed.
@@ -209,7 +233,8 @@
       if (s && s.videoUrl) {
         box.classList.add('is-video');
         frame('https://www.facebook.com/plugins/video.php?show_text=false&width=' + w +
-          '&href=' + encodeURIComponent(s.videoUrl), w, Math.round(w * 9 / 16));
+          '&href=' + encodeURIComponent(s.videoUrl), w,
+          window.matchMedia('(max-width:900px)').matches ? Math.round(w * 9 / 16) : h);
       } else {
         // Facebook allows 180-500px wide for the feed box
         var fw = Math.max(180, Math.min(500, w));
