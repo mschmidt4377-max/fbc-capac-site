@@ -2,6 +2,7 @@
    - the Events list page   (<main data-events-list>)
    - the Home page carousel (<ul id="home-events">)
    - event detail pages     (<main data-event="slug">, or events/view/?e=slug)
+   - the top banner on every page (next upcoming event, visitors can hide it)
    See assets/data/README.md for how to edit events. */
 (function () {
   var script = document.currentScript || (function () {
@@ -202,12 +203,51 @@
     initForm(box);
   }
 
+  /* ---------- Top banner: the next upcoming event, on every page ---------- */
+  var DISMISS_KEY = 'fbc-banner-dismissed';
+  // Any change to the event (new event, new date or time, new title) makes a new key,
+  // so the banner shows again for visitors who closed it before.
+  function bannerKey(e) { return e.slug + '|' + e.start + '|' + e.title; }
+  function shortTime(d) {
+    var h = d.getHours(), m = d.getMinutes();
+    return (h % 12 || 12) + (m ? ':' + (m < 10 ? '0' : '') + m : '') + NNBSP + (h < 12 ? 'AM' : 'PM');
+  }
+  /* "today at 7 PM", "this Saturday at 2 PM", "Wednesday, October 28 at 7 PM" */
+  function when(e, now) {
+    var s = e._start;
+    if (s <= now) return isMulti(e) ? 'happening now through ' + DAYS[e._end.getDay()] : 'happening now';
+    var days = Math.round((new Date(s.getFullYear(), s.getMonth(), s.getDate()) -
+      new Date(now.getFullYear(), now.getMonth(), now.getDate())) / 864e5);
+    var day = days === 0 ? 'today' : days === 1 ? 'tomorrow'
+      : days < 7 && s.getDay() > now.getDay() ? 'this ' + DAYS[s.getDay()]
+      : DAYS[s.getDay()] + ', ' + monthDay(s);
+    return e.allDay ? day : day + ' at ' + shortTime(s);
+  }
+  function renderBanner(all) {
+    var e = upcoming(all)[0];
+    if (!e) return;
+    var key = bannerKey(e);
+    try { if (localStorage.getItem(DISMISS_KEY) === key) return; } catch (err) {}
+    var bar = document.createElement('div');
+    bar.className = 'site-banner';
+    bar.setAttribute('role', 'region');
+    bar.setAttribute('aria-label', 'Next event');
+    bar.innerHTML = '<a class="site-banner-link" href="' + href(e) + '"><strong>' + esc(e.title) + '</strong> ' +
+      esc(when(e, new Date())) + ' <span class="site-banner-more">Details →</span></a>' +
+      '<button class="site-banner-close" type="button" aria-label="Hide this message">×</button>';
+    bar.querySelector('.site-banner-close').addEventListener('click', function () {
+      bar.remove();
+      try { localStorage.setItem(DISMISS_KEY, key); } catch (err) {}
+    });
+    document.body.insertBefore(bar, document.body.firstChild);
+  }
+
   function start() {
     var home = document.getElementById('home-events');
     var list = document.getElementById('event-list');
     var det = document.querySelector('main[data-event]');
-    if (!home && !list && !det) return;
     load().then(function (all) {
+      renderBanner(all);
       if (home) renderHome(all, home);
       if (list) renderList(all, list);
       if (det) renderDetail(all, det);

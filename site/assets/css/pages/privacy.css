@@ -1,0 +1,7 @@
+.privacy{max-width:760px;padding-top:80px;padding-bottom:80px}
+.privacy h1{margin:0 0 8px}
+.privacy h2{margin:40px 0 10px}
+.privacy p{line-height:1.7}
+.privacy .updated{font-size:14px;color:var(--black);opacity:.7;margin-bottom:30px}
+.privacy a{color:var(--blue)}
+@media (max-width:767px){.privacy{padding-top:50px;padding-bottom:50px}}

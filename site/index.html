@@ -205,7 +205,7 @@
 
 <footer class="site-footer">
   <div class="footer-logo"><img src="assets/img/logo-footer.jpg" alt="First Baptist Church of Capac"></div>
-  <p>106 W Church St., Capac, MI 48014 • Phone: 810-395-2195 • Copyright © 2025 First Baptist Church of Capac. All rights reserved</p>
+  <p>106 W Church St., Capac, MI 48014 • Phone: 810-395-2195 • Copyright © 2025 First Baptist Church of Capac. All rights reserved • <a href="privacy/">Privacy Policy</a></p>
 </footer>
 <script src="assets/js/main.js"></script>
 <script src="assets/js/events.js" defer></script>
@@ -233,8 +233,7 @@
       if (s && s.videoUrl) {
         box.classList.add('is-video');
         frame('https://www.facebook.com/plugins/video.php?show_text=false&width=' + w +
-          '&href=' + encodeURIComponent(s.videoUrl), w,
-          window.matchMedia('(max-width:900px)').matches ? Math.round(w * 9 / 16) : h);
+          '&href=' + encodeURIComponent(s.videoUrl), w, Math.round(w * 9 / 16));
       } else {
         // Facebook allows 180-500px wide for the feed box
         var fw = Math.max(180, Math.min(500, w));
