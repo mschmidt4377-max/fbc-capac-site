@@ -1,13 +1,16 @@
-# Every day, saves any new Sunday service from Facebook as an MP3
-# (tools/archive-sermons.mjs). Facebook deletes live videos after 30 days,
-# so a daily run means a missed day is caught the next day.
+# Every Sunday and Monday, saves any new Sunday service from Facebook as an MP3
+# (tools/archive-sermons.mjs). Facebook deletes live videos after 30 days;
+# the Monday run catches a Sunday that was missed.
 name: Archive sermons
 
 on:
   workflow_dispatch:
   schedule:
-    # 22:00 UTC = 6 PM Michigan time in summer, 5 PM in winter.
-    - cron: '0 22 * * *'
+    # Sunday and Monday 1 PM Michigan time. Cron runs in UTC, so both lines
+    # are needed: 17:00 UTC in summer (EDT), 18:00 UTC in winter (EST).
+    # The other line runs an hour off and finds nothing new, which is harmless.
+    - cron: '0 17 * * 0,1'
+    - cron: '0 18 * * 0,1'
 
 permissions:
   contents: write
