@@ -1,0 +1,55 @@
+# Every day, saves any new Sunday service from Facebook as an MP3
+# (tools/archive-sermons.mjs). Facebook deletes live videos after 30 days,
+# so a daily run means a missed day is caught the next day.
+name: Archive sermons
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 22:00 UTC = 6 PM Michigan time in summer, 5 PM in winter.
+    - cron: '0 22 * * *'
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: sermon-archive
+  cancel-in-progress: false
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install tools
+        run: |
+          sudo apt-get update -q && sudo apt-get install -y -q ffmpeg
+          pipx install yt-dlp
+          cd tools && npm ci && npx playwright install --with-deps chromium
+
+      - name: Save new sermons
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node tools/archive-sermons.mjs
+
+      - name: Commit the sermon list
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add site/assets/data/sermons.json site/assets/data/sermon.json
+          if ! git diff --cached --quiet; then
+            git config user.name "sermon-bot"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "Archive new sermon audio"
+            git pull --rebase
+            git push
+            # A push made by this robot does not start other workflows, so ask for a deploy.
+            if [ "${{ vars.DEPLOY_SITE }}" = "true" ]; then gh workflow run deploy.yml; fi
+          fi

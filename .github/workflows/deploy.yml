@@ -1,21 +1,14 @@
-# Publishes site/ to GitHub Pages on every push, and every Sunday right after
-# the service grabs the newest Facebook video (tools/fetch-sermon.mjs) first.
+# Publishes site/ to GitHub Pages on every push. The sermon archive workflow
+# also starts it after it saves a new sermon.
 name: Deploy site
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
-  schedule:
-    # Sunday 12:30 PM Michigan time. Cron runs in UTC, so both lines are
-    # needed: 16:30 UTC in summer (EDT), 17:30 UTC in winter (EST).
-    # 18:30 UTC is a late retry in case the stream ran long.
-    - cron: '30 16 * * 0'
-    - cron: '30 17 * * 0'
-    - cron: '30 18 * * 0'
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -25,34 +18,15 @@ concurrency:
 
 jobs:
   deploy:
+    # Off until the repo variable DEPLOY_SITE is set to true (Settings > Secrets
+    # and variables > Actions > Variables), so nothing publishes before launch.
+    if: vars.DEPLOY_SITE == 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Get newest sermon video
-        if: github.event_name != 'push'
-        env:
-          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
-          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
-        run: node tools/fetch-sermon.mjs
-
-      - name: Save it
-        if: github.event_name != 'push'
-        run: |
-          if ! git diff --quiet site/assets/data/sermon.json; then
-            git config user.name "sermon-bot"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git commit -am "Update Sunday sermon video"
-            git push
-          fi
-
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

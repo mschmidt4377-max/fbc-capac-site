@@ -26,6 +26,7 @@ Goal: one-for-one copy of https://www.firstbaptistchurchofcapac.com (Squarespace
 2. `cd tools && node compare.mjs <slug> [...]` → side-by-side images in `compare/side/` + match %.
 3. Look at the side-by-side PNGs (Read tool) and fix differences.
 
-## Sunday sermon video
-- `.github/workflows/deploy.yml` deploys `site/` to Pages on push, and on Sundays 12:30 PM Michigan time runs `tools/fetch-sermon.mjs`, which saves the newest Facebook page video to `site/assets/data/sermon.json` (needs repo secrets `FB_PAGE_ID`, `FB_PAGE_TOKEN`; owner guide in `tools/SERMON-SETUP.md`).
-- Home `#fb-feed` shows that video; if `videoUrl` is empty it shows the Facebook Page feed plugin instead.
+## Sermons (video + audio archive)
+- `.github/workflows/deploy.yml` deploys `site/` to Pages on push, only when repo variable `DEPLOY_SITE` is `true` (off until launch).
+- `.github/workflows/sermon-archive.yml` runs daily: `tools/archive-sermons.mjs` uses Playwright (no login) to list videos on the public Facebook Videos tab, then yt-dlp + FFmpeg save each new video over 20 min as `<date>.mp3` to a GitHub Release `sermon-<date>`, list it in `site/assets/data/sermons.json`, and point `site/assets/data/sermon.json` at the newest one. No Facebook key needed.
+- Home `#fb-feed` embeds the `sermon.json` video; if `videoUrl` is empty it shows the Facebook Page feed plugin instead.
