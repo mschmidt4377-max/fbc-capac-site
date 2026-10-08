@@ -79,7 +79,7 @@
     ul.innerHTML = up.map(function (e) {
       var h = href(e), s = e._start;
       return '<li class="event-card">' +
-        '<a class="event-thumb" href="' + h + '"><img src="' + img(e.image) + '" alt=""><span class="event-date"><span class="m">' +
+        '<a class="event-thumb" href="' + h + '"><img src="' + img(e.image) + '" alt="' + esc(e.title) + '"><span class="event-date"><span class="m">' +
         MONTHS[s.getMonth()].slice(0, 3) + '</span><span class="d">' + s.getDate() + '</span></span></a>' +
         '<a class="event-title" href="' + h + '">' + esc(e.title) + '</a>' +
         '<time class="event-meta">' + monthDay(s) + ', ' + s.getFullYear() + '</time></li>';
