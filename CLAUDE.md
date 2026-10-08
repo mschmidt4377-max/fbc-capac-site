@@ -29,4 +29,5 @@ Goal: one-for-one copy of https://www.firstbaptistchurchofcapac.com (Squarespace
 ## Sermons (video + audio archive)
 - `.github/workflows/deploy.yml` deploys `site/` to Pages on push, only when repo variable `DEPLOY_SITE` is `true` (off until launch).
 - `.github/workflows/sermon-archive.yml` runs Sun + Mon 1 PM Michigan time: `tools/archive-sermons.mjs` uses Playwright (no login) to list videos on the public Facebook Videos tab, then yt-dlp + FFmpeg save each new video over 20 min as `<date>.mp3` to a GitHub Release `sermon-<date>`, list it in `site/assets/data/sermons.json`, and point `site/assets/data/sermon.json` at the newest one. No Facebook key needed.
+- `site/sermons/` lists `sermons.json` with audio players (newest in a card, the rest below). Home sermons row links to it.
 - Home `#fb-feed` embeds the `sermon.json` video; if `videoUrl` is empty it shows the Facebook Page feed plugin instead.
