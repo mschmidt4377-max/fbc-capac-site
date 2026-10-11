@@ -6,14 +6,14 @@ name: Archive sermons
 on:
   workflow_dispatch:
   schedule:
-    # Sundays at 12:45 PM and 8 PM Michigan time. Cron runs in UTC with no
+    # Sundays at 12:45 PM and 8:07 PM Michigan time (off the hour to avoid GitHub delays). Cron runs in UTC with no
     # timezone setting, so each time has a summer (EDT) and a winter (EST) line.
     # The off-season line runs an hour off and finds nothing new, which is harmless.
     # 8 PM Sunday Eastern is already Monday in UTC, hence day 1 on those lines.
     - cron: '45 16 * * 0'   # 12:45 PM EDT
     - cron: '45 17 * * 0'   # 12:45 PM EST
-    - cron: '0 0 * * 1'     # 8 PM EDT (Sunday)
-    - cron: '0 1 * * 1'     # 8 PM EST (Sunday)
+    - cron: '7 0 * * 1'     # 8:07 PM EDT (Sunday)
+    - cron: '7 1 * * 1'     # 8:07 PM EST (Sunday)
 
 permissions:
   contents: write
