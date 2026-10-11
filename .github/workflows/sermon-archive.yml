@@ -6,11 +6,11 @@ name: Archive sermons
 on:
   workflow_dispatch:
   schedule:
-    # Sunday and Monday 1 PM Michigan time. Cron runs in UTC, so both lines
-    # are needed: 17:00 UTC in summer (EDT), 18:00 UTC in winter (EST).
+    # Sunday and Monday 1:07 PM Michigan time (7 minutes past to dodge GitHub's on-the-hour delays). Cron runs in UTC, so both lines
+    # are needed: 17:07 UTC in summer (EDT), 18:07 UTC in winter (EST).
     # The other line runs an hour off and finds nothing new, which is harmless.
-    - cron: '0 17 * * 0,1'
-    - cron: '0 18 * * 0,1'
+    - cron: '7 17 * * 0,1'
+    - cron: '7 18 * * 0,1'
 
 permissions:
   contents: write
