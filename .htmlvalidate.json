@@ -1,0 +1,10 @@
+{
+  "root": true,
+  "extends": ["html-validate:recommended"],
+  "rules": {
+    "no-implicit-button-type": "warn",
+    "no-inline-style": "warn",
+    "prefer-native-element": "warn",
+    "form-dup-name": ["error", { "shared": ["radio", "checkbox", "button", "reset", "submit"] }]
+  }
+}

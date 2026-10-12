@@ -70,6 +70,7 @@
   .feature-row .fr-media{width:211px}
   .feature-row .fr-media .label{white-space:nowrap;font-size:21.6px;margin:23px 0 44px}
   .feature-row .fr-media img,.row-sermons .fr-media img,.row-missions .fr-media img{height:270px}
+  .feature-row{grid-template-columns:minmax(0,1fr)}
   .row-sermons .fr-media{width:100%}
   .fb-feed{height:420px}
   .fb-feed.is-video{display:block;height:auto;background:none}
