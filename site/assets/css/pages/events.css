@@ -122,3 +122,8 @@ main{background:var(--blue);color:#fff}
   .ev-pg-prev .ev-pg-icon{margin-right:28px}
   .ev-pg-next .ev-pg-icon{margin-left:28px}
 }
+@media (max-width:400px){
+  .ev-pg-icon{flex:0 0 auto}
+  .ev-pg{min-width:0}
+  .ev-pg-title{font-size:22px}
+}
