@@ -7,7 +7,7 @@ description: Drive and prove changes to the First Baptist Church of Capac static
 
 The product is `site/`: one `index.html` per folder, shared `assets/css/styles.css` and `assets/js/main.js`, page code in `assets/js/{events,sermons}.js`, data in `assets/data/*.json`. The surface is a browser. There is no build step, so "launch" means serving `site/`.
 
-Everything below runs from the repo root. Read `features/README.md` for per-feature recipes (navigation, events, sermons, contact, giving); a proof that touches one entry point is incomplete when the feature file lists others.
+Everything below runs from the repo root. Read `.claude/skills/verify/features/README.md` for per-feature recipes (navigation, events, sermons, contact, giving); a proof that touches one entry point is incomplete when the feature file lists others.
 
 ## Launch
 

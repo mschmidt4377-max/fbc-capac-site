@@ -125,6 +125,9 @@ async function checkPage(browser, vpName, spec, { slug, url }) {
       result.menu = { bodyMenuOpen: open, ariaExpanded: expanded };
       if (!open) fail('after clicking .burger, body lacks .menu-open');
       if (expanded !== 'true') fail(`after clicking .burger, aria-expanded is "${expanded}", expected "true"`);
+      // The menu fades in over 0.3s; a shot taken straight after the click shows it half transparent.
+      await page.waitForFunction(() => getComputedStyle(document.querySelector('.mobile-menu')).opacity === '1', null, { timeout: 2000 })
+        .catch(() => fail('mobile menu did not reach opacity 1 within 2s'));
       await page.screenshot({ path: shot('mobile-menu'), scale: 'css' });
     }
   } catch (e) {
