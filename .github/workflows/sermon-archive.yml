@@ -6,6 +6,7 @@ name: Archive sermons
 on:
   workflow_dispatch:
   schedule:
+<<<<<<< Updated upstream
     # Sundays at 12:45 PM and 8:07 PM Michigan time (off the hour to avoid GitHub delays). Cron runs in UTC with no
     # timezone setting, so each time has a summer (EDT) and a winter (EST) line.
     # The off-season line runs an hour off and finds nothing new, which is harmless.
@@ -14,6 +15,14 @@ on:
     - cron: '45 17 * * 0'   # 12:45 PM EST
     - cron: '7 0 * * 1'     # 8:07 PM EDT (Sunday)
     - cron: '7 1 * * 1'     # 8:07 PM EST (Sunday)
+=======
+    # GitHub starts scheduled runs late (hours) or skips them, most often on
+    # the hour. So: odd minutes, and many tries from about 1 PM to 8 PM
+    # Michigan time (17-00 UTC covers EDT and EST). A run that finds no new
+    # video does nothing, so extra tries are harmless.
+    - cron: '17 17-23 * * 0,1'
+    - cron: '17 0 * * 1,2'
+>>>>>>> Stashed changes
 
 permissions:
   contents: write
