@@ -3,12 +3,15 @@
 //
 // 1. Playwright opens the page's public Videos tab (no login) and lists video IDs.
 // 2. yt-dlp reads each new video. Short clips (under 20 min) are skipped.
-// 3. yt-dlp + FFmpeg make <date>.mp3, and `gh` uploads it to a GitHub Release.
+// 3. yt-dlp + FFmpeg make <date>.mp3. find-sermon-start.py finds where the
+//    sermon starts, and FFmpeg cuts off the singing and announcements before it.
+//    `gh` uploads the MP3 to a GitHub Release. (The video is not cut.)
 // 4. site/assets/data/sermons.json gets one entry per saved sermon, and
 //    sermon.json points the Home page video at the newest one.
 //
-// Needs on PATH: yt-dlp, ffmpeg, gh (with GH_TOKEN). Safe to run again any time:
-// videos already in sermons.json are skipped.
+// Needs on PATH: yt-dlp, ffmpeg, gh (with GH_TOKEN), python with faster-whisper.
+// Safe to run again any time: videos already in sermons.json are skipped.
+// Sermons saved before the cut existed (no "start" in sermons.json) get cut once.
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -18,7 +21,8 @@ import { chromium } from 'playwright';
 
 const PAGE_ID = '100064603992779';
 const MIN_SECONDS = 20 * 60;
-const file = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'site', 'assets', 'data', 'sermons.json');
+const tools = path.dirname(fileURLToPath(import.meta.url));
+const file = path.join(tools, '..', 'site', 'assets', 'data', 'sermons.json');
 
 const sermons = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : [];
 const known = new Set(sermons.map((s) => s.videoId));
@@ -38,9 +42,42 @@ if (!ids.length) {
 }
 console.log(`Found ${ids.length} videos on the page.`);
 
-const ytdlp = (args) => execFileSync('yt-dlp', ['--no-warnings', ...args], { encoding: 'utf8' }).trim();
+const run = (cmd, args) => execFileSync(cmd, args, { encoding: 'utf8' }).trim();
+const ytdlp = (args) => run('yt-dlp', ['--no-warnings', ...args]);
+const gh = (args) => run('gh', args);
+const save = () => fs.writeFileSync(file, JSON.stringify(sermons, null, 2) + '\n');
+const minutesOf = (mp3) =>
+  Math.round(run('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', mp3]) / 60);
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'sermon-'));
 let failed = false;
+
+// Cuts the singing and announcements off the front of the MP3, in place.
+// Returns the seconds cut off (0 when the sermon start was not clear).
+function cutToSermon(mp3) {
+  const start = Number(run('python', [path.join(tools, 'find-sermon-start.py'), mp3]));
+  if (start > 0) {
+    const cut = mp3.replace(/\.mp3$/, '-cut.mp3');
+    run('ffmpeg', ['-v', 'error', '-y', '-ss', String(start), '-i', mp3, '-c', 'copy', cut]);
+    fs.renameSync(cut, mp3);
+  }
+  return start;
+}
+
+for (const s of sermons.filter((s) => s.start === undefined)) {
+  try {
+    const [, tag, name] = s.mp3.match(/download\/([^/]+)\/([^/]+)$/);
+    gh(['release', 'download', tag, '-p', name, '-D', tmp, '--clobber']);
+    const mp3 = path.join(tmp, name);
+    s.start = cutToSermon(mp3);
+    if (s.start) gh(['release', 'upload', tag, mp3, '--clobber']);
+    s.minutes = minutesOf(mp3);
+    save();
+    console.log(`Cut ${name}: sermon starts at ${s.start}s.`);
+  } catch (err) {
+    console.error(`Could not cut ${s.mp3}:`, err.message);
+    failed = true;
+  }
+}
 
 for (const videoId of ids.filter((id) => !known.has(id))) {
   const url = `https://www.facebook.com/${PAGE_ID}/videos/${videoId}/`;
@@ -56,9 +93,9 @@ for (const videoId of ids.filter((id) => !known.has(id))) {
     ytdlp(['-q', '-f', 'ba/b', '-x', '--audio-format', 'mp3', '--audio-quality', '64K',
       '--postprocessor-args', 'ffmpeg:-ac 1', '-o', path.join(tmp, `${name}.%(ext)s`), url]);
     const mp3 = path.join(tmp, `${name}.mp3`);
+    const start = cutToSermon(mp3);
 
     const tag = `sermon-${name}`;
-    const gh = (args) => execFileSync('gh', args, { encoding: 'utf8' }).trim();
     let exists = true;
     try { gh(['release', 'view', tag]); } catch { exists = false; }
     if (exists) gh(['release', 'upload', tag, mp3, '--clobber']);
@@ -70,12 +107,13 @@ for (const videoId of ids.filter((id) => !known.has(id))) {
       title,
       videoId,
       videoUrl: url,
-      minutes: Math.round(duration / 60),
+      minutes: minutesOf(mp3),
+      start,
       mp3: `https://github.com/${repo}/releases/download/${tag}/${name}.mp3`,
     });
     sermons.sort((a, b) => b.date.localeCompare(a.date));
-    fs.writeFileSync(file, JSON.stringify(sermons, null, 2) + '\n');
-    console.log(`Saved ${name}.mp3 (${Math.round(duration / 60)} min).`);
+    save();
+    console.log(`Saved ${name}.mp3 (sermon starts at ${start}s).`);
   } catch (err) {
     console.error(`Could not save ${url}:`, err.message);
     failed = true;

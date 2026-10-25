@@ -33,10 +33,16 @@ jobs:
         with:
           node-version: 20
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
       - name: Install tools
         run: |
           sudo apt-get update -q && sudo apt-get install -y -q ffmpeg
           pipx install yt-dlp
+          # Voice detector that finds where the sermon starts (tools/find-sermon-start.py).
+          pip install -q faster-whisper==1.2.1
           cd tools && npm ci && npx playwright install --with-deps chromium
 
       - name: Save new sermons
