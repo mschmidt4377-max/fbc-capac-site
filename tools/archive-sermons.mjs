@@ -5,13 +5,15 @@
 // 2. yt-dlp reads each new video. Short clips (under 20 min) are skipped.
 // 3. yt-dlp + FFmpeg make <date>.mp3. find-sermon-start.py finds where the
 //    sermon starts, and FFmpeg cuts off the singing and announcements before it.
-//    `gh` uploads the MP3 to a GitHub Release. (The video is not cut.)
+//    FFmpeg also takes the static and hum out of the voice and evens the volume.
+//    `gh` uploads the MP3 to a GitHub Release. (The video is not changed.)
 // 4. site/assets/data/sermons.json gets one entry per saved sermon, and
 //    sermon.json points the Home page video at the newest one.
 //
 // Needs on PATH: yt-dlp, ffmpeg, gh (with GH_TOKEN), python with faster-whisper.
 // Safe to run again any time: videos already in sermons.json are skipped.
-// Sermons saved before the cut existed (no "start" in sermons.json) get cut once.
+// Sermons saved before the cleaning existed (no "cleaned" in sermons.json) get
+// cut (if not cut yet) and cleaned once.
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -42,7 +44,7 @@ if (!ids.length) {
 }
 console.log(`Found ${ids.length} videos on the page.`);
 
-const run = (cmd, args) => execFileSync(cmd, args, { encoding: 'utf8' }).trim();
+const run = (cmd, args, opts) => execFileSync(cmd, args, { encoding: 'utf8', ...opts }).trim();
 const ytdlp = (args) => run('yt-dlp', ['--no-warnings', ...args]);
 const gh = (args) => run('gh', args);
 const save = () => fs.writeFileSync(file, JSON.stringify(sermons, null, 2) + '\n');
@@ -51,30 +53,36 @@ const minutesOf = (mp3) =>
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'sermon-'));
 let failed = false;
 
-// Cuts the singing and announcements off the front of the MP3, in place.
-// Returns the seconds cut off (0 when the sermon start was not clear).
-function cutToSermon(mp3) {
-  const start = Number(run('python', [path.join(tools, 'find-sermon-start.py'), mp3]));
-  if (start > 0) {
-    const cut = mp3.replace(/\.mp3$/, '-cut.mp3');
-    run('ffmpeg', ['-v', 'error', '-y', '-ss', String(start), '-i', mp3, '-c', 'copy', cut]);
-    fs.renameSync(cut, mp3);
-  }
+// Changes the MP3 in place: cuts off everything before `start` seconds (found by
+// find-sermon-start.py when not given; 0 when the sermon start was not clear),
+// then cleans the voice: highpass drops rumble, arnndn (RNNoise, gentle
+// voice-clean.rnnn model) removes static and hum, loudnorm evens the volume.
+// Returns the seconds cut off.
+function cutAndClean(mp3, start = Number(run('python', [path.join(tools, 'find-sermon-start.py'), mp3]))) {
+  const out = mp3.replace(/\.mp3$/, '-clean.mp3');
+  // Runs in tools/ so the model path has no drive letter (":" breaks FFmpeg filter text).
+  run('ffmpeg', ['-v', 'error', '-y', '-ss', String(start), '-i', mp3,
+    '-af', 'highpass=f=80,arnndn=m=voice-clean.rnnn,loudnorm=I=-16:TP=-1.5',
+    '-ar', '48000', '-ac', '1', '-b:a', '64k', out], { cwd: tools });
+  fs.renameSync(out, mp3);
   return start;
 }
 
-for (const s of sermons.filter((s) => s.start === undefined)) {
+for (const s of sermons.filter((s) => !s.cleaned)) {
   try {
     const [, tag, name] = s.mp3.match(/download\/([^/]+)\/([^/]+)$/);
     gh(['release', 'download', tag, '-p', name, '-D', tmp, '--clobber']);
     const mp3 = path.join(tmp, name);
-    s.start = cutToSermon(mp3);
-    if (s.start) gh(['release', 'upload', tag, mp3, '--clobber']);
+    // An MP3 with a known start is already cut; only clean it.
+    if (s.start === undefined) s.start = cutAndClean(mp3);
+    else cutAndClean(mp3, 0);
+    gh(['release', 'upload', tag, mp3, '--clobber']);
     s.minutes = minutesOf(mp3);
+    s.cleaned = true;
     save();
-    console.log(`Cut ${name}: sermon starts at ${s.start}s.`);
+    console.log(`Cleaned ${name} (sermon starts at ${s.start}s).`);
   } catch (err) {
-    console.error(`Could not cut ${s.mp3}:`, err.message);
+    console.error(`Could not clean ${s.mp3}:`, err.message);
     failed = true;
   }
 }
@@ -93,7 +101,7 @@ for (const videoId of ids.filter((id) => !known.has(id))) {
     ytdlp(['-q', '-f', 'ba/b', '-x', '--audio-format', 'mp3', '--audio-quality', '64K',
       '--postprocessor-args', 'ffmpeg:-ac 1', '-o', path.join(tmp, `${name}.%(ext)s`), url]);
     const mp3 = path.join(tmp, `${name}.mp3`);
-    const start = cutToSermon(mp3);
+    const start = cutAndClean(mp3);
 
     const tag = `sermon-${name}`;
     let exists = true;
@@ -109,6 +117,7 @@ for (const videoId of ids.filter((id) => !known.has(id))) {
       videoUrl: url,
       minutes: minutesOf(mp3),
       start,
+      cleaned: true,
       mp3: `https://github.com/${repo}/releases/download/${tag}/${name}.mp3`,
     });
     sermons.sort((a, b) => b.date.localeCompare(a.date));
