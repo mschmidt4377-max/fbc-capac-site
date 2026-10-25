@@ -6,7 +6,8 @@
     "videoUrl": "https://www.facebook.com/100064603992779/videos/2566339103840270/",
     "minutes": 43,
     "mp3": "https://github.com/mschmidt4377-max/fbc-capac-site/releases/download/sermon-2026-10-25/2026-10-25.mp3",
-    "start": 1503
+    "start": 1503,
+    "cleaned": true
   },
   {
     "date": "2026-10-18",
@@ -15,7 +16,8 @@
     "videoUrl": "https://www.facebook.com/100064603992779/videos/2006372036704140/",
     "minutes": 47,
     "mp3": "https://github.com/mschmidt4377-max/fbc-capac-site/releases/download/sermon-2026-10-18/2026-10-18.mp3",
-    "start": 1384
+    "start": 1384,
+    "cleaned": true
   },
   {
     "date": "2026-10-11",
@@ -24,7 +26,8 @@
     "videoUrl": "https://www.facebook.com/100064603992779/videos/2152966138626544/",
     "minutes": 50,
     "mp3": "https://github.com/mschmidt4377-max/fbc-capac-site/releases/download/sermon-2026-10-11/2026-10-11.mp3",
-    "start": 1219
+    "start": 1219,
+    "cleaned": true
   },
   {
     "date": "2026-10-04",
@@ -33,7 +36,8 @@
     "videoUrl": "https://www.facebook.com/100064603992779/videos/1142189338237180/",
     "minutes": 48,
     "mp3": "https://github.com/mschmidt4377-max/fbc-capac-site/releases/download/sermon-2026-10-04/2026-10-04.mp3",
-    "start": 1652
+    "start": 1652,
+    "cleaned": true
   },
   {
     "date": "2026-09-27",
@@ -42,7 +46,8 @@
     "videoUrl": "https://www.facebook.com/100064603992779/videos/3587372931443701/",
     "minutes": 38,
     "mp3": "https://github.com/mschmidt4377-max/fbc-capac-site/releases/download/sermon-2026-09-27/2026-09-27.mp3",
-    "start": 1460
+    "start": 1460,
+    "cleaned": true
   },
   {
     "date": "2026-09-20",
@@ -51,7 +56,8 @@
     "videoUrl": "https://www.facebook.com/100064603992779/videos/1085110677219598/",
     "minutes": 52,
     "mp3": "https://github.com/mschmidt4377-max/fbc-capac-site/releases/download/sermon-2026-09-20/2026-09-20.mp3",
-    "start": 1490
+    "start": 1490,
+    "cleaned": true
   },
   {
     "date": "2026-09-13",
@@ -60,6 +66,7 @@
     "videoUrl": "https://www.facebook.com/100064603992779/videos/1443950350917172/",
     "minutes": 56,
     "mp3": "https://github.com/mschmidt4377-max/fbc-capac-site/releases/download/sermon-2026-09-13/2026-09-13.mp3",
-    "start": 1551
+    "start": 1551,
+    "cleaned": true
   }
 ]
