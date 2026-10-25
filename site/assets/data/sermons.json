@@ -4,55 +4,62 @@
     "title": "First Baptist Church of Capac on Reels",
     "videoId": "2566339103840270",
     "videoUrl": "https://www.facebook.com/100064603992779/videos/2566339103840270/",
-    "minutes": 68,
-    "mp3": "https://github.com/mschmidt4377-max/fbc-capac-site/releases/download/sermon-2026-10-25/2026-10-25.mp3"
+    "minutes": 43,
+    "mp3": "https://github.com/mschmidt4377-max/fbc-capac-site/releases/download/sermon-2026-10-25/2026-10-25.mp3",
+    "start": 1503
   },
   {
     "date": "2026-10-18",
     "title": "First Baptist Church of Capac on Reels",
     "videoId": "2006372036704140",
     "videoUrl": "https://www.facebook.com/100064603992779/videos/2006372036704140/",
-    "minutes": 70,
-    "mp3": "https://github.com/mschmidt4377-max/fbc-capac-site/releases/download/sermon-2026-10-18/2026-10-18.mp3"
+    "minutes": 47,
+    "mp3": "https://github.com/mschmidt4377-max/fbc-capac-site/releases/download/sermon-2026-10-18/2026-10-18.mp3",
+    "start": 1384
   },
   {
     "date": "2026-10-11",
     "title": "First Baptist Church of Capac on Reels",
     "videoId": "2152966138626544",
     "videoUrl": "https://www.facebook.com/100064603992779/videos/2152966138626544/",
-    "minutes": 70,
-    "mp3": "https://github.com/mschmidt4377-max/fbc-capac-site/releases/download/sermon-2026-10-11/2026-10-11.mp3"
+    "minutes": 50,
+    "mp3": "https://github.com/mschmidt4377-max/fbc-capac-site/releases/download/sermon-2026-10-11/2026-10-11.mp3",
+    "start": 1219
   },
   {
     "date": "2026-10-04",
     "title": "First Baptist Church of Capac on Reels",
     "videoId": "1142189338237180",
     "videoUrl": "https://www.facebook.com/100064603992779/videos/1142189338237180/",
-    "minutes": 76,
-    "mp3": "https://github.com/mschmidt4377-max/fbc-capac-site/releases/download/sermon-2026-10-04/2026-10-04.mp3"
+    "minutes": 48,
+    "mp3": "https://github.com/mschmidt4377-max/fbc-capac-site/releases/download/sermon-2026-10-04/2026-10-04.mp3",
+    "start": 1652
   },
   {
     "date": "2026-09-27",
     "title": "First Baptist Church of Capac on Reels",
     "videoId": "3587372931443701",
     "videoUrl": "https://www.facebook.com/100064603992779/videos/3587372931443701/",
-    "minutes": 63,
-    "mp3": "https://github.com/mschmidt4377-max/fbc-capac-site/releases/download/sermon-2026-09-27/2026-09-27.mp3"
+    "minutes": 38,
+    "mp3": "https://github.com/mschmidt4377-max/fbc-capac-site/releases/download/sermon-2026-09-27/2026-09-27.mp3",
+    "start": 1460
   },
   {
     "date": "2026-09-20",
     "title": "First Baptist Church of Capac on Reels",
     "videoId": "1085110677219598",
     "videoUrl": "https://www.facebook.com/100064603992779/videos/1085110677219598/",
-    "minutes": 77,
-    "mp3": "https://github.com/mschmidt4377-max/fbc-capac-site/releases/download/sermon-2026-09-20/2026-09-20.mp3"
+    "minutes": 52,
+    "mp3": "https://github.com/mschmidt4377-max/fbc-capac-site/releases/download/sermon-2026-09-20/2026-09-20.mp3",
+    "start": 1490
   },
   {
     "date": "2026-09-13",
     "title": "First Baptist Church of Capac on Reels",
     "videoId": "1443950350917172",
     "videoUrl": "https://www.facebook.com/100064603992779/videos/1443950350917172/",
-    "minutes": 82,
-    "mp3": "https://github.com/mschmidt4377-max/fbc-capac-site/releases/download/sermon-2026-09-13/2026-09-13.mp3"
+    "minutes": 56,
+    "mp3": "https://github.com/mschmidt4377-max/fbc-capac-site/releases/download/sermon-2026-09-13/2026-09-13.mp3",
+    "start": 1551
   }
 ]
