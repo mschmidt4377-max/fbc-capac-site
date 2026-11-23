@@ -1,11 +1,17 @@
 # Publishes site/ to GitHub Pages on every push. The sermon archive workflow
-# also starts it after it saves a new sermon.
+# also starts it after it saves a new sermon. Backups for a GitHub glitch: the
+# deploy step tries twice, and a scheduled run deploys again after each Sunday.
 name: Deploy site
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    # Safety net. If a deploy failed after a sermon was saved, this run puts the
+    # newest site live. Re-deploying an unchanged site is harmless.
+    - cron: '30 2 * * 1'    # Sunday night (10:30 PM EDT, 9:30 PM EST)
+    - cron: '30 12 * * 1'   # Monday morning (8:30 AM EDT, 7:30 AM EST)
 
 permissions:
   contents: read
@@ -24,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url || steps.deployment_retry.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
@@ -32,4 +38,11 @@ jobs:
         with:
           path: site
       - id: deployment
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+      # GitHub sometimes fails this step for no reason. Wait, then try once more.
+      - if: steps.deployment.outcome == 'failure'
+        run: sleep 60
+      - id: deployment_retry
+        if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@v4
