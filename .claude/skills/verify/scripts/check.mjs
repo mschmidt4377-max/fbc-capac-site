@@ -87,6 +87,8 @@ async function checkPage(browser, vpName, spec, { slug, url }) {
   page.on('console', (m) => {
     if (m.type() !== 'error') return;
     const loc = m.location().url || '';
+    // The Cloudflare beacon's /cdn-cgi/rum call is CORS-blocked from localhost; ignore its console noise (the request is never blocked).
+    if (m.text().includes('cloudflareinsights.com') || /^https?:\/\/([\w-]+\.)*cloudflareinsights\.com\//.test(loc)) return;
     // Offline runs make every third-party fetch fail with a generic "Failed to load resource"; that is not a site bug.
     if (loc && !isLocal(loc) && m.text().startsWith('Failed to load resource')) return;
     result.consoleErrors.push(m.text());
@@ -105,6 +107,10 @@ async function checkPage(browser, vpName, spec, { slug, url }) {
     if (result.status !== 200) fail(`HTTP ${result.status}`);
     await page.waitForLoadState('networkidle', { timeout: 5000 }).catch(() => {});
     await scrollThrough(page);
+
+    // Presence only: the beacon is third-party and is neither awaited nor blocked.
+    result.beaconScripts = await page.locator('script[src*="static.cloudflareinsights.com/beacon.min.js"]').count();
+    if (result.beaconScripts !== 1) fail(`Cloudflare beacon script count is ${result.beaconScripts}, expected 1`);
 
     const width = spec.viewport.width;
     result.scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
