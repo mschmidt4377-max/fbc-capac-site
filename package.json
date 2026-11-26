@@ -6,7 +6,8 @@
     "lint:html": "html-validate \"site/**/*.html\"",
     "lint:css": "stylelint \"site/assets/css/**/*.css\"",
     "lint:js": "eslint site/assets/js tools/*.mjs",
-    "lint": "npm run lint:html && npm run lint:css && npm run lint:js"
+    "lint:links": "node tools/check-links.mjs",
+    "lint": "npm run lint:html && npm run lint:css && npm run lint:js && npm run lint:links"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

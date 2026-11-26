@@ -1,6 +1,6 @@
 # Lint notes
 
-Run everything with `npm ci && npm run lint` (CI does this on pull requests). Individual tools: `npm run lint:html`, `lint:css`, `lint:js`. Errors fail the run; warnings do not.
+Run everything with `npm ci && npm run lint` (CI does this on pull requests). Individual tools: `npm run lint:html`, `lint:css`, `lint:js`, `lint:links`. Errors fail the run; warnings do not.
 
 The pages are a one-for-one copy of a live Squarespace site, so rules were relaxed where they flag the copied style rather than real bugs. No file under `site/` was changed to satisfy a linter.
 
@@ -15,6 +15,7 @@ Scope: `site/**/*.html`, including `site/_template.html`.
 | `no-implicit-button-type` | warn | The buttons (carousel arrows, burger, gallery thumbs) sit outside forms, so the default `submit` type does nothing. Adding `type="button"` is safe but touches 30+ pages. |
 | `no-inline-style` | warn | Section background images are set inline, copied from the live pages. |
 | `prefer-native-element` | warn | `<div role="region">` on the missionaries carousel, copied from the live page. |
+| `attr-quotes` | error, `style: "any"` | The Cloudflare Web Analytics snippet (`<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' ...>`) is single-quoted. It is third-party code pasted verbatim before `</body>` on every page and must not be reformatted. The default style would raise 2 errors per page (56 total). `any` accepts single or double quotes; unquoted values still fail. |
 | `form-dup-name` | error, with `checkbox` added to `shared` | The contact form's "Inquiring About" checkboxes intentionally share `name="inquiring_about"` so Formspree receives them as one field. |
 
 Remaining warnings: 41 (0 errors).
@@ -63,6 +64,18 @@ Scope: `site/assets/js` (browser globals, classic scripts) and `tools/*.mjs` (ES
 | `no-unused-vars` | error, `caughtErrors: 'none'` | Same catch blocks; the error object is unused by design. |
 
 Remaining: 0 errors, 0 warnings.
+
+## Links and beacon (`tools/check-links.mjs`, `npm run lint:links`)
+
+Plain Node, no dependencies. Scans `site/**/*.html` (including `_template.html`) and prints `file:line  message` for each problem, then a one-line summary. Exit 1 on any problem.
+
+- For every `href`, `src`, `srcset` and `poster` that is not `http(s):`, `//`, `mailto:`, `tel:`, `data:`, `javascript:` or a bare `#fragment`, the target must exist under `site/`. Paths resolve against the page's directory; `?query` and `#fragment` are stripped, `%` escapes are decoded, and a directory target needs `index.html`.
+- Links starting with `/` fail, because the site must work under a GitHub Pages subpath. Links that climb out of `site/` also fail.
+- Every page must contain exactly one `<script>` for `static.cloudflareinsights.com/beacon.min.js`, located after `</main>` and before `</body>`. The check only reads; the beacon tag is skipped as a link.
+- `site/_template.html` is checked like a page, with two adjustments: its relative links are written for a page one folder deep, so they resolve from a virtual `site/page/`, and links containing the `SLUG` placeholder are skipped. The beacon assertion applies to it unchanged.
+- Allowlist: `tools/check-links.allow.json`, entries `{ "file", "ref", "reason" }` (`file` is repo-relative, `ref` is the attribute value, or the single URL for `srcset`). It is empty: the first run found no broken links, no root-absolute links and no beacon problems, so nothing needed an exception.
+
+Current result: 28 pages, 761 local refs, 0 problems.
 
 ## Not linted
 

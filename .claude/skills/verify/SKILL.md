@@ -9,6 +9,10 @@ The product is `site/`: one `index.html` per folder, shared `assets/css/styles.c
 
 Everything below runs from the repo root. Read `.claude/skills/verify/features/README.md` for per-feature recipes (navigation, events, sermons, contact, giving); a proof that touches one entry point is incomplete when the feature file lists others.
 
+## Static pre-check
+
+Before launching anything, run `npm ci && npm run lint`. It runs html-validate, stylelint, eslint, and `tools/check-links.mjs`, which fails on any broken or root-absolute local link and asserts that every page has exactly one Cloudflare beacon script after `</main>` and before `</body>`. A red lint means the browser sweep is premature. See `LINT_NOTES.md` for what is relaxed and why.
+
 ## Launch
 
 ```sh
@@ -34,17 +38,18 @@ node .claude/skills/verify/scripts/check.mjs
 node .claude/skills/verify/scripts/check.mjs home events/vbs     # only these slugs
 ```
 
-Slugs are the folder path under `site/` (`home` for the root). Playwright is resolved from `tools/node_modules`; if missing, `cd tools && npm ci` (Chromium lives in `~/.cache/ms-playwright`). For each page and viewport the script loads the page and records: HTTP status, console errors and page errors, local 4xx/5xx or failed requests, `documentElement.scrollWidth` greater than the viewport width (with the offending elements named), and a full-page screenshot. Mobile also clicks `.burger` and asserts `body.menu-open` and `aria-expanded="true"`, then screenshots the open menu. Third-party failures (Facebook, Google Fonts, Tithe.ly) are ignored so an offline run stays meaningful. Exit code is nonzero if any page fails.
+Slugs are the folder path under `site/` (`home` for the root). Playwright is resolved from `tools/node_modules`; if missing, `cd tools && npm ci` (Chromium lives in `~/.cache/ms-playwright`). For each page and viewport the script loads the page and records: HTTP status, console errors and page errors, local 4xx/5xx or failed requests, the count of Cloudflare beacon script tags (must be exactly 1; the beacon is never requested or blocked by the script), `documentElement.scrollWidth` greater than the viewport width (with the offending elements named), and a full-page screenshot. Mobile also clicks `.burger` and asserts `body.menu-open` and `aria-expanded="true"`, then screenshots the open menu. Third-party failures are ignored so an offline run stays meaningful: generic `Failed to load resource` errors from Facebook, Google Fonts and Tithe.ly, and any console error mentioning `cloudflareinsights.com` (the beacon's `/cdn-cgi/rum` call is CORS-blocked from localhost). The beacon request itself is never blocked. Exit code is nonzero if any page fails.
 
 For behavior the sweep does not cover (carousel arrows, sermon list rendering, form fields), write a short Playwright snippet using the handles in the matching `features/*.md` file, again against `http://127.0.0.1:8090`. Do not submit the contact form: it posts to Formspree.
 
 ## Evidence
 
-Each sweep writes `verify-out/<YYYYMMDD-HHMMSS>/` containing `<slug>-desktop.png`, `<slug>-mobile.png`, `<slug>-mobile-menu.png` (slashes in slugs become `__`) and `report.json` (per page and viewport: status, failures, console errors, failed requests, scrollWidth, overflowers, menu state). `verify-out/` is gitignored.
+Each sweep writes `verify-out/<YYYYMMDD-HHMMSS>/` containing `<slug>-desktop.png`, `<slug>-mobile.png`, `<slug>-mobile-menu.png` (slashes in slugs become `__`) and `report.json` (per page and viewport: status, failures, console errors, failed requests, `beaconScripts`, scrollWidth, overflowers, menu state). `verify-out/` is gitignored.
 
 Proof standards:
 
 - Quote failing lines from the script output and name the `report.json` entry; do not summarize a failure away. Overflow at 360 px is a real finding, not a flaky check.
+- A missing or duplicated beacon shows as `beaconScripts` other than 1 in `report.json` (and in `npm run lint:links` output); report it as a finding, and never edit or remove the beacon to make a check pass.
 - Look at the screenshots for visual claims; a passing sweep says nothing about layout fidelity. For comparison against the live Squarespace site use `cd tools && node compare.mjs <slug>` (see CLAUDE.md).
 - Exercise the real user path: click the burger, press the carousel arrows, do not set classes or call functions from the console.
 - Data-driven UI (events, sermons) renders from `assets/data/*.json`; verify the rendered DOM, not just that the JSON loads.
@@ -62,4 +67,5 @@ Kills only the PID in `verify-out/serve-<port>.pid`, and only after confirming t
 | Script | Invocation | Purpose |
 | --- | --- | --- |
 | `scripts/serve.sh` | `serve.sh start\|stop\|doctor` (env `VERIFY_PORT`) | Isolated server for `site/` on 8090 with a PID file |
-| `scripts/check.mjs` | `node check.mjs [slug ...]` (env `VERIFY_PORT`, `VERIFY_URL`) | Per-page, per-viewport sweep; writes evidence; exits nonzero on failure |
+| `scripts/check.mjs` | `node check.mjs [slug ...]` (env `VERIFY_PORT`, `VERIFY_URL`) | Per-page, per-viewport sweep incl. beacon presence; writes evidence; exits nonzero on failure |
+| `tools/check-links.mjs` | `npm run lint:links` | Static check of local links and beacon placement across `site/**/*.html` |
